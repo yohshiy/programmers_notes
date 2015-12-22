@@ -1,2 +1,3 @@
 # programmers_notes
-Sample code
+
+Sample code for "Programmer's Notes" Blog 
