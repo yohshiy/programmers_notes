@@ -1,0 +1,15 @@
+@startuml{copy_policy.png}
+
+(*) --> if "          コピーに問題があるメンバーを持たない" then
+  ->[Yes] "定義しない(デフォルトを使用)"
+else  
+  --> if "コピーする必要がない or できない" then
+    ->[Yes] "コピー禁止"
+  else
+    --> [No] "定義する"
+  endif
+endif
+
+@enduml
+
+
