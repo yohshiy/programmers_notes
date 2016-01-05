@@ -1,4 +1,10 @@
-﻿
+﻿/// @file
+/// 
+/// コピーコンストラクター、代入演算子の定義が不要なサンプル
+///
+/// コンパイル:
+///   g++ noncopy_sample.cpp
+
 #include <string>
 #include <iostream>
 

@@ -16,7 +16,6 @@
 /// コピーコンストラクター、代入演算子の定義方法サンプル
 ////////////////////////////////////////////////////////////////
 
-
 /// 人クラス
 class Person
 {
@@ -32,13 +31,11 @@ public:
   }
 
   /// デストラクター.
-  /// 継承用に仮想化
   virtual ~Person()
   {
     SetName(0);
   }
 
-  ////////////////
 
   /// コピーコンストラクター
   Person(const Person &other)
@@ -57,33 +54,8 @@ public:
     return *this;
   }
 
-  ////////////////
-  
-  // Getter
-  const char *GetName() const { return m_name; }
-  unsigned int GetAge() const { return m_age; }
-  
-  // Setter
-  Person &SetName(const char *name)
-  {
-    if (m_name)
-    {
-      delete m_name;
-      m_name = 0;
-    }
-    if (name) {
-      int leng = strlen(name);
-      m_name = new char [leng + 1];
-      strcpy(m_name, name);
-    }
-    return *this;
-  }
-  Person &SetAge(unsigned int age)
-  {
-    m_age = age;
-    return *this;
-  }
-  
+  // :  
+
 };
 
 inline std::ostream &operator<<(std::ostream &os, const Person &person)
@@ -111,13 +83,10 @@ public:
   }
 
   /// デストラクター.
-  /// 継承用に仮想化
   virtual ~Student()
   {
     SetSchool(0);
   }
-
-  ////////////////////////////////////////////////////////////////
 
   /// コピーコンストラクター
   Student(const Student &other)
@@ -137,26 +106,8 @@ public:
     return *this;
   }
 
-  ////////////////////////////////////////////////////////////////
+  // :
   
-  // Getter
-  const char *GetSchool() const { return m_school; }
-  
-  // Setter
-  Student &SetSchool(const char *school)
-  {
-    if (m_school)
-    {
-      delete m_school;
-      m_school = 0;
-    }
-    if (school) {
-      int leng = strlen(school);
-      m_school = new char [leng + 1];
-      strcpy(m_school, school);
-    }
-    return *this;
-  }
 };
 
 inline std::ostream &operator<<(std::ostream &os, const Student &student)
