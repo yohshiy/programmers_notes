@@ -63,7 +63,11 @@ namespace LinqSample
 	    Console.WriteLine("Max = {0}",	src.Max());
 	    Console.WriteLine("All = {0}", 	src.All(elem => elem % 3 == 0));
 	    Console.WriteLine("Any = {0}", 	src.Any(elem => elem % 3 == 0));
-	}
+
+        // Distinct
+	    src = new[] {3, 3, 2, 9, 2, 6, 2};
+        Console.WriteLine("Distinct = {0}", Dump(src.Distinct()));
+    }
 
 	
 	//// 連結説明用
