@@ -6,7 +6,7 @@
 class Person
 {
   std::string m_name;
-  unsigned int m_age;
+  int m_age;
 
 public:
   Person() :m_age(0) {}
