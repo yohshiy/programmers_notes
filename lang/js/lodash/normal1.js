@@ -1,42 +1,24 @@
-﻿// 元の配列
-var srcary = "3,x,2,9,a,6".split(",");
-// [ '3', 'x', '2', '9', 'a', '6' ]
+﻿// 元の配列  [ '3', '2', '9', '6' ]
+var src = "3,2,9,6".split(",");
 
-
-// 数値にならない要素を取り除く
-var filary = [];
-for (cnt in srcary) {
-	if (!isNaN(srcary[cnt])) {
-		filary.push(srcary[cnt]);
-	}
+// 数値に変換 [ 3, 2, 9, 6 ]
+var map_ary = [];
+for (cnt in src) {
+    map_ary.push(parseInt(src[cnt], 10));
 }
-// [ '3', '2', '9', '6' ]
 
-
-// 数値に変換
-var mary = [];
-for (cnt in filary) {
-	if (!isNaN(filary[cnt])) {
-		mary.push(parseInt(filary[cnt], 10));
-	}
+// 奇数を取得 [ 3, 9 ]
+var filter_ary = [];
+for (cnt in map_ary) {
+    if (map_ary[cnt] % 2 == 1) {
+	filter_ary.push(map_ary[cnt]);
+    }
 }
-// [ 3, 2, 9, 6 ]
-
-
-// 5 以下の数値を取得
-var fil2ary = [];
-for (cnt in mary) {
-	if (mary[cnt] <= 5) {
-		fil2ary.push(mary[cnt]);
-	}
-}
-// [ 3, 2 ]
-
 
 // 要素の積算
 var prod = 1;
-for (cnt in fil2ary) {
-	prod *= fil2ary[cnt];
+for (cnt in filter_ary) {
+    prod *= filter_ary[cnt];
 }
 
-console.log(prod);				// 6
+console.log(prod);		// 27

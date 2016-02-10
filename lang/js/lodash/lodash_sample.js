@@ -1,14 +1,13 @@
 ﻿var _ = require('lodash');
 
-var srcary = "3,x,2,9,a,6".split(",");
+var src = "3,2,9,6".split(",");
 
-var prod = _(srcary)
-		.filter(str => !isNaN(str))
-		.map(str => parseInt(str,10))
-		.filter(n => n <= 5)
-		.reduce((t,n) => t * n);
+var prod = _(src)
+    .map(str => parseInt(str,10)) // 数値に変換
+    .filter(n => n % 2 == 1)      // 奇数を取得
+    .reduce((t,n) => t * n);      // 要素の積算
 
-console.log(prod);				// 6
+console.log(prod);		  // 27
 
 
 
