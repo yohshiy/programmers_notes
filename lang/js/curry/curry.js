@@ -2,7 +2,7 @@
 
 function plus(a, b)
 {
-	return a + b;
+    return a + b;
 }
 
 console.log(plus(2,3));
@@ -10,10 +10,18 @@ console.log(plus(2,3));
 
 function curried_plus(a)
 {
-	return function(b) { return plus(a,b); };
+    return function(b) { return plus(a,b); };
 }
 
 console.log(curried_plus(2)(3));
+
+
+function partial_plus(b)
+{
+    return plus(2, b);
+}
+
+console.log(partial_plus(3));	// 5
 
 
 
@@ -35,7 +43,7 @@ console.log(result);
 
 function plus3(a, b, c)
 {
-	return a+b+c;
+    return a+b+c;
 }
 
 curried_plus3 = _.curry(plus3);
@@ -54,7 +62,7 @@ console.log(result);			// [ '3ab', '2ab', '9ab', '6ab' ]
 
 function plus4(a,b,c,d)
 {
-	return a+b+c+d;
+    return a+b+c+d;
 }
 console.log(_.curry(plus4)('a')('b')(_,'c')('d'));	 // abdc
 console.log(_.curry(plus4)('a')(_, 'b')('c')('d'));	 // acbd
