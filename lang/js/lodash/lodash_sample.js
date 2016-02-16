@@ -96,12 +96,13 @@ console.log(result);
 
 
 // 関数で指定
-var strs = ["foo", "bar", "BAZ", "qux"]
+var strs = ["foo", "bar", "BAZ", "qux"];
 result = _.sortBy(strs);
 console.log(result);			// [ 'BAZ', 'bar', 'foo', 'qux' ]
 
-result = _.sortBy(strs,
-		  elem => _.toLower(elem) );
+result = _.sortBy(strs, elem => _.toLower(elem) );
+console.log(result);			// [ 'bar', 'BAZ', 'foo', 'qux' ]
+result = _.sortBy(strs, _.toLower);
 console.log(result);			// [ 'bar', 'BAZ', 'foo', 'qux' ]
 
 

@@ -1,4 +1,6 @@
 ﻿
+var _ = require('lodash');
+
 // 逐次処理
 _.forEach([3,2,9,6],
 	  function(elem) { console.log(elem);});
@@ -40,7 +42,7 @@ _.filter(objs, 'enrolled');
 
 
 // 畳み込み
-var src = [3,2,9,6]
+var src = [3,2,9,6];
 _.reduce(src, (sum, elem) => sum + elem);		 // 20
 _.reduce(src, (max, elem) => (max < elem) ? elem : max); // 9
 _.reduce([3,2,9,6], (count, elem) => count+1, 0);	 // 4
@@ -67,10 +69,10 @@ _.sortBy(objs, elem => elem.age * -1);
 
 
 // 関数で指定
-var strs = ["foo", "bar", "BAZ", "qux"]
+var strs = ["foo", "bar", "BAZ", "qux"];
 _.sortBy(strs);	                           // [ 'BAZ', 'bar', 'foo', 'qux' ]
 _.sortBy(strs, elem => _.toLower(elem) );  // [ 'bar', 'BAZ', 'foo', 'qux' ]
-
+// _.sortBy(strs, _.toLower); でも可
 
 var points = [{'x': 2, 'y': 8},
 	      {'x': 5, 'y': 1},
