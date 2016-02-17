@@ -67,3 +67,28 @@ function plus4(a,b,c,d)
 console.log(_.curry(plus4)('a')('b')(_,'c')('d'));	 // abdc
 console.log(_.curry(plus4)('a')(_, 'b')('c')('d'));	 // acbd
 console.log(_.curry(plus4)(_,'a')('b')('c')('d'));	 // bacd
+
+
+// partial
+var result = _.map([3,2,9,6], _.partial(plus3, 'a', 'b'));
+console.log(result);			// [ 'ab3', 'ab2', 'ab9', 'ab6' ]
+
+var result = _.map([3,2,9,6], _.partial(plus3, 'a', _, 'b'));
+console.log(result);			// [ 'a3b', 'a2b', 'a9b', 'a6b' ]
+
+var result = _.map([3,2,9,6], _.partial(plus3, _, 'a', 'b'));
+console.log(result);			// [ 'a3b', 'a2b', 'a9b', 'a6b' ]
+
+
+
+// bind
+function Person(name, age)
+{
+	this.name = name;
+	this.age = age;
+	this.add_age = function (n) { return this.age + n; };
+}
+var user = new Person('taro', 30);
+console.log(_.map([3, 2, 9, 6], _.bind(user.add_age, user)));
+// [ 33, 32, 39, 36 ]
+
