@@ -77,7 +77,7 @@ var result = _.map([3,2,9,6], _.partial(plus3, 'a', _, 'b'));
 console.log(result);			// [ 'a3b', 'a2b', 'a9b', 'a6b' ]
 
 var result = _.map([3,2,9,6], _.partial(plus3, _, 'a', 'b'));
-console.log(result);			// [ 'a3b', 'a2b', 'a9b', 'a6b' ]
+console.log(result);			// [ '3ab', '2ab', '9ab', '6ab' ]
 
 
 
@@ -91,4 +91,5 @@ function Person(name, age)
 var user = new Person('taro', 30);
 console.log(_.map([3, 2, 9, 6], _.bind(user.add_age, user)));
 // [ 33, 32, 39, 36 ]
+
 
