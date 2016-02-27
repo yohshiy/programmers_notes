@@ -42,10 +42,10 @@ console.log();
 var myEmitter = new MyEmitter();
 
 myEmitter.on('fooEvent', function() {
-    console.log('fooEvent', this);
+    console.log('fooEvent this =', this);
 });
 myEmitter.emit('fooEvent');
-// fooEvent MyEmitter {
+// fooEvent this= MyEmitter {
 //   domain: null,
 //   _events: { fooEvent: [Function] },
 //   _eventsCount: 1,
@@ -57,11 +57,12 @@ myEmitter.emit('fooEvent');
 var myEmitter = new MyEmitter();
 
 myEmitter.on('fooEvent', () => {
-    console.log('fooEvent', this);
+    console.log('fooEvent this = ', this);
 });
 
-console.log(this);		// {}
-myEmitter.emit('fooEvent');	// fooEvent {}
+console.log('this = ', this);   // this = {}
+myEmitter.emit('fooEvent');	// fooEvent this = {}
+
 
 //// エラーイベント
 ////////////////////////////////////////////////////////////////
@@ -113,5 +114,6 @@ myEmitter.emit('fooEvent');
 // 1
 // 3
 // 2 (async)
+
 
 
