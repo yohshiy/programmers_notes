@@ -1,0 +1,9 @@
+{
+  "name": "process_arg",
+  "version": "1.0.0",
+  "main": "process_arg.js",
+  "scripts": {
+    "start": "node process_arg.js"
+  },
+  "license": "ISC"
+}
