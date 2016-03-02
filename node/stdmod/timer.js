@@ -1,13 +1,44 @@
-﻿
-var iobj = setInterval(() => {
-	console.log('setInterval()');
+﻿'use strict';
+
+//// setTimeout
+////////////////////////////////////////////////////////////////
+
+setTimeout(() => {
+    console.log('Timeout');
+}, 5000);
+
+setTimeout((a, b) => {
+    console.log('Timeout', a, b); // Timeout foo bar
+}, 5000, 'foo', 'bar');
+
+
+//// setInterval
+////////////////////////////////////////////////////////////////
+
+// 止まらない
+//
+// setInterval(() => {
+//     console.log('Interval');
+// }, 1000);
+
+var intervalID = setInterval(() => {
+    console.log('Interval');
 }, 1000);
 
-
-setTimeout((obj) => {
-	console.log('setTimeout()');
-	clearInterval(obj);
-}, 5000, iobj);
+setTimeout(() => {
+    clearInterval(intervalID);
+}, 5000);
 
 
-setImmediate(()=>console.log('setImmediate()'));
+// ショート版
+//
+// setTimeout(clearInterval, 5000,
+// 	   setInterval(console.log, 1000, 'Interval'));
+
+
+
+//// setImmediate
+////////////////////////////////////////////////////////////////
+
+setImmediate(()=>console.log('Immediate'));
+
