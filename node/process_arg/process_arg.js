@@ -1,4 +1,4 @@
-﻿'use strict'
+﻿'use strict';
 
 for (let cnt in process.argv) {
     console.log('%d : %s', cnt, process.argv[cnt]);
