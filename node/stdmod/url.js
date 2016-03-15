@@ -85,8 +85,13 @@ console.log(url.parse(url.parse(escStr)));
 //   href: 'file:///C:/Program%20Files/nodejs/index.html' }
 
 
+console.log(decodeURIComponent('%E6%97%A5%E6%9C%AC%E8%AA%9E'));
+var parsed = url.parse('https://ja.wikipedia.org/wiki/%E3%83%A1%E3%82%A4%E3%83%B3%E3%83%9A%E3%83%BC%E3%82%B8');
+console.log(decodeURIComponent(parsed.path));
+// /wiki/メインページ
 
-
+//// URL の生成
+////////////////////////////////////////////////////////////////
 
 var urlObj = {
 	protocol: 'http',
@@ -100,28 +105,42 @@ console.log(url.format(urlObj));
 // http://user:pass@host.com:8080/p/a/t/h?q=string#elemid
 
 
+// http, https, ftp, gopher, file 以外の protocol 
 urlObj = {
 	protocol: 'foo',
-	hostname: 'host.com',
-	pathname: '/p/a/t/h' };
-console.log(url.format(urlObj));
-// foo:host.com/p/a/t/h
+	hostname: 'host.com' };
+console.log(url.format(urlObj));   // foo:host.com
 
+// foo で slashes を true
 urlObj = {
 	protocol: 'foo',
 	slashes: true,
-	hostname: 'host.com',
-	pathname: '/p/a/t/h' };
-console.log(url.format(urlObj));
-// foo://host.com/p/a/t/h
+	hostname: 'host.com' };
+console.log(url.format(urlObj));   // foo://host.com
 
-
+// http で slashes を false
 urlObj = {
 	protocol: 'http',
 	slashes: false,
-	hostname: 'host.com',
-	pathname: '/p/a/t/h' };
-console.log(url.format(urlObj));
-// http://host.com/p/a/t/h
+	hostname: 'host.com' };
+console.log(url.format(urlObj));   // http://host.com
 
+
+//// 相対 URL の生成
+////////////////////////////////////////////////////////////////
+
+console.log(url.resolve("http://host.com/foo/index.html", "../bar/baz.html")); // http://host.com/bar/baz.html
+
+
+
+//// Query String
+////////////////////////////////////////////////////////////////
+
+var querystring = require('querystring');
+var qobj = querystring.parse('foo=bar&baz=qux&baz=quux&corge');
+console.log(qobj);
+// { foo: 'bar', baz: [ 'qux', 'quux' ], corge: '' }
+
+qobj = querystring.parse('sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=%E6%97%A5%E6%9C%AC%E8%AA%9E');
+console.log(qobj);
 
