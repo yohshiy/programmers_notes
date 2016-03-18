@@ -182,8 +182,8 @@ url.format(escUrlObj);
 // https://ja.wikipedia.org/wiki/%E3%83%A1%E3%82%A4%E3%83%B3%E3%83%9A%E3%83%BC%E3%82%B8
 
 
-var escUrsStr = 'https://ja.wikipedia.org/wiki/%E3%83%A1%E3%82%A4%E3%83%B3%E3%83%9A%E3%83%BC%E3%82%B8';
-var parsedObj = url.parse(escUrsStr);
+var escUrlStr = 'https://ja.wikipedia.org/wiki/%E3%83%A1%E3%82%A4%E3%83%B3%E3%83%9A%E3%83%BC%E3%82%B8';
+var parsedObj = url.parse(escUrlStr);
 decodeURIComponent(parsedObj.pathname);
 // '/wiki/ メインページ'
 
