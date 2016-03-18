@@ -69,27 +69,6 @@ console.log(url.parse(smbStr, false, true));
 
 
 
-//// URL(エスケープ文字列付き) の解析
-////////////////////////////////////////////////////////////////
-console.log();
-
-
-var escStr = 'file:///C:/Program Files/nodejs/index.html';
-console.log(url.parse(url.parse(escStr)));
-// Url {
-//   protocol: 'file:',
-//   slashes: true,
-//       : 
-//   pathname: '/C:/Program%20Files/nodejs/index.html',
-//   path: '/C:/Program%20Files/nodejs/index.html',
-//   href: 'file:///C:/Program%20Files/nodejs/index.html' }
-
-
-console.log(decodeURIComponent('%E6%97%A5%E6%9C%AC%E8%AA%9E'));
-var parsed = url.parse('https://ja.wikipedia.org/wiki/%E3%83%A1%E3%82%A4%E3%83%B3%E3%83%9A%E3%83%BC%E3%82%B8');
-console.log(decodeURIComponent(parsed.path));
-// /wiki/メインページ
-
 //// URL の生成
 ////////////////////////////////////////////////////////////////
 
@@ -126,6 +105,20 @@ urlObj = {
 console.log(url.format(urlObj));   // http://host.com
 
 
+// file だけどホスト名がない
+urlObj = {
+	protocol: 'file',
+	pathname: '/C:/foo/bar' };
+console.log(url.format(urlObj));   // file:/C:/foo/bar
+	
+// file 、ホスト名がなし、 slashes を true
+urlObj = {
+	protocol: 'file',
+	slashes: true,
+	pathname: '/C:/foo/bar' };
+console.log(url.format(urlObj));   // file:///C:/foo/bar
+
+
 //// 相対 URL の生成
 ////////////////////////////////////////////////////////////////
 
@@ -137,10 +130,71 @@ console.log(url.resolve("http://host.com/foo/index.html", "../bar/baz.html")); /
 ////////////////////////////////////////////////////////////////
 
 var querystring = require('querystring');
+
 var qobj = querystring.parse('foo=bar&baz=qux&baz=quux&corge');
 console.log(qobj);
 // { foo: 'bar', baz: [ 'qux', 'quux' ], corge: '' }
 
-qobj = querystring.parse('sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=%E6%97%A5%E6%9C%AC%E8%AA%9E');
-console.log(qobj);
 
+var str = querystring.stringify({ foo: 'bar', baz: [ 'qux', 'quux' ], corge: '' });
+console.log(str);
+// foo=bar&baz=qux&baz=quux&corge=
+
+
+
+//// エスケープ
+////////////////////////////////////////////////////////////////
+console.log();
+
+var escQstrObj = {
+	protocol: 'http',
+	hostname: 'host.com',
+	pathname: 'search.html',
+	query: {q: '日本語'}
+};
+console.log(url.format(escQstrObj));
+// http://host.com/search.html?q=%E6%97%A5%E6%9C%AC%E8%AA%9E
+
+var escQstrStr = 'http://host.com/search.html?q=%E6%97%A5%E6%9C%AC%E8%AA%9E';
+console.log(url.parse(escQstrStr, true));
+// Url {
+//     :
+//   search: '?q=%E6%97%A5%E6%9C%AC%E8%AA%9E',
+//   query: { q: '日本語' },
+//   pathname: '/search.html',
+//      : 
+
+var escStr = 'file:///C:/Program Files/nodejs/index.html';
+console.log(url.parse(url.parse(escStr)));
+// Url {
+//   protocol: 'file:',
+//   slashes: true,
+//       : 
+//   pathname: '/C:/Program%20Files/nodejs/index.html',
+//   path: '/C:/Program%20Files/nodejs/index.html',
+//   href: 'file:///C:/Program%20Files/nodejs/index.html' }
+
+var escObj = {
+	protocol: 'file',
+	slashes: true,
+	pathname: '/C:/Program%20Files/nodejs/index.html'
+};
+console.log(url.format(escObj));
+// file:///C:/Program%20Files/nodejs/index.html
+
+
+
+var escUrlObj = {
+	protocol: 'https',
+	hostname: 'ja.wikipedia.org',
+	pathname: '/wiki/' + encodeURIComponent('メインページ')
+};
+console.log(url.format(escUrlObj));
+// https://ja.wikipedia.org/wiki/%E3%83%A1%E3%82%A4%E3%83%B3%E3%83%9A%E3%83%BC%E3%82%B8
+
+
+var escUrsStr = 'https://ja.wikipedia.org/wiki/%E3%83%A1%E3%82%A4%E3%83%B3%E3%83%9A%E3%83%BC%E3%82%B8';
+var parsedObj = url.parse(escUrsStr);
+console.log(parsedObj);
+console.log(decodeURIComponent(parsedObj.pathname));
+// '/wiki/ メインページ'
