@@ -57,15 +57,15 @@
   )
 
 
-;; ターミナルの場合(window-system が nil)、<backspace> が C-h になるため、
-;; C-h で一文字削除に設定
+;; ターミナルの場合(window-system が nil)、
+;; <backspace> が C-h になるため、 C-h で一文字削除に設定
 (unless window-system
-  (let ((hkey (kbd "C-h")))
-    (global-set-key hkey 'delete-backward-char)
-    (define-key isearch-mode-map hkey 'isearch-delete-char) ;; インクリメンタルサーチ用
-    (add-hook 'c-mode-common-hook
-	      '(lambda () (local-set-key hkey 'c-electric-delete))) ;; C 言語系モード
-    ))
+  (global-set-key "\C-h" 'delete-backward-char)             ;; 全般
+  (define-key isearch-mode-map "\C-h" 'isearch-delete-char) ;; インクリメンタルサーチ用
+  (add-hook 'c-mode-common-hook
+	    '(lambda ()
+	       (local-set-key "\C-h" 'c-electric-delete)))  ;; C 言語系モード
+  )
 (global-set-key (kbd "M-?") 'help-command) ; ヘルプキーを変更
 
 
@@ -134,8 +134,8 @@
 
 ;; 格納ディレクトリーの変更
 ;;   (対象ファイルのパターン . 保存ファイルパス) のリスト
-(setq auto-save-file-name-transforms
-      '(("\\`/[^/]*:\\([^/]*/\\)*\\([^/]*\\)\\'" "~/.emacs.d/auto-save-list/\\2" t)))
+;; (setq auto-save-file-name-transforms
+;;       '(("\\`/[^/]*:\\([^/]*/\\)*\\([^/]*\\)\\'" "~/.emacs.d/auto-save-list/\\2" t)))
 
 
 ;; 保存の間隔
@@ -160,7 +160,7 @@
 ;; -------------------------------------------
 
 ;; 実行の有無
-;; (setq create-lockfiles nil)
+(setq create-lockfiles nil)
 
 
 
@@ -187,7 +187,8 @@
 (add-to-list 'load-path "~/.emacs.d/site-lisp")
 
 ;; load-path に登録されたディレクトリーを subdir 扱い
-(normal-top-level-add-subdirs-to-load-path)
+;;   注:アクセス件でエラーになりやすい
+;; (normal-top-level-add-subdirs-to-load-path)
 
 
 
@@ -203,6 +204,7 @@
 
 ;; スタート画面(メッセージ)を表示しない
 (setq inhibit-startup-screen t)
+
 
 ;;; 領域選択時、削除キーで一括削除
 (delete-selection-mode t)
