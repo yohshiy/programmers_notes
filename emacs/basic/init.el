@@ -27,16 +27,6 @@
 	))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 
-;; ベル音の除去
-;; 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; ベル音で何もしない
-(setq ring-bell-function 'ignore)
-
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -94,10 +84,11 @@
 ;; ;; インクリメンタルサーチ
 ;; (setq isearch-case-fold-search nil)
 
-;; バッファー変更時の検索
+
+;; バッファー名の検索
 (setq read-buffer-completion-ignore-case t)
 
-;; ファイル選択時の検索
+;; ファイル名の検索
 (setq read-file-name-completion-ignore-case t)
 
 
@@ -116,17 +107,18 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-;; backup ファイルオープン時のバックアップ (xxx~
+;; backup ファイルオープン時のバックアップ (xxx~)
 ;; -------------------------------------------
 
 ;; 実行の有無
 (setq make-backup-files t)
 
 ;; 格納ディレクトリーの変更
+;;   (対象ディレクトリー . 格納ディレクトリー) のリスト
 (setq backup-directory-alist '(("." . "~/.ehist")))
 
 
-;; バックアップファイルをナンバリングし、複数保存
+;; 番号付けによる複数保存
 (setq version-control     t)  ;; 実行の有無
 (setq kept-new-versions   5)  ;; 最新の保持数
 (setq kept-old-versions   1)  ;; 最古の保持数
@@ -137,10 +129,11 @@
 ;; auto-save 自動保存ファイル (#xxx#)
 ;; -------------------------------------------
 
-;; 実行しない  (デフォルト : 実行)
+;; 実行の有無
 ;; (setq auto-save-default nil)
 
 ;; 格納ディレクトリーの変更
+;;   (対象ファイルのパターン . 保存ファイルパス) のリスト
 (setq auto-save-file-name-transforms
       '(("\\`/[^/]*:\\([^/]*/\\)*\\([^/]*\\)\\'" "~/.emacs.d/auto-save-list/\\2" t)))
 
@@ -150,31 +143,25 @@
 (setq auto-save-interval 100)	 ;; 打鍵 (デフォルト : 300)
 
 
-;; Google ドライブのフォルダーではファイルを保存しない
-(setq my-gdrive-dir "c:/Users/miyoshid/Google ドライブ")
-(add-hook 'find-file-hook '(lambda ()
-			     (when (string-match (concat "^" (regexp-quote my-gdrive-dir))
-						 buffer-file-name)
-			       (setq backup-inhibited nil))))
-
 
 
 ;; auto-save-list 自動保存のリスト  (~/.emacs.d/auto-save-list/.saves-xxx)
 ;; --------------------------------------------------------------------
 
-;; 実行しない
-;; (setq auto-save-list-file-prefix nil)
+;; 実行の有無
+(setq auto-save-list-file-prefix nil)
 
 ;; 格納ディレクトリーの変更
-;; (setq auto-save-list-file-prefix "~/tmp")
+;; (setq auto-save-list-file-prefix "~/tmp/.saves-")
 
 
 
 ;; lock ロックファイル (.#xxx)
 ;; -------------------------------------------
 
-;; 実行しない  (デフォルト : 実行)
+;; 実行の有無
 ;; (setq create-lockfiles nil)
+
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -193,13 +180,30 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 
+;; ロードパスの設定
+;; 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(add-to-list 'load-path "~/.emacs.d/site-lisp")
+
+;; load-path に登録されたディレクトリーを subdir 扱い
+(normal-top-level-add-subdirs-to-load-path)
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 
 ;; その他
 ;; 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; スタートメッセージを表示しない
-(setq inhibit-startup-message t)
+;; ベル音禁止
+(setq ring-bell-function 'ignore)
+
+
+;; スタート画面(メッセージ)を表示しない
 (setq inhibit-startup-screen t)
 
 ;;; 領域選択時、削除キーで一括削除
 (delete-selection-mode t)
+
