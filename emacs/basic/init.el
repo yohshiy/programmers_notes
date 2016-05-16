@@ -20,9 +20,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (setq initial-frame-alist
-      '((top . 80)			; 位置(上)
-	(left . 200)			; 位置(左)
-	(width . 150)			; サイズ(幅)
+      '((width . 150)			; サイズ(幅)
 	(height . 50)			; サイズ(高さ)
 	))
 
@@ -135,7 +133,8 @@
 ;; 格納ディレクトリーの変更
 ;;   (対象ファイルのパターン . 保存ファイルパス) のリスト
 ;; (setq auto-save-file-name-transforms
-;;       '(("\\`/[^/]*:\\([^/]*/\\)*\\([^/]*\\)\\'" "~/.emacs.d/auto-save-list/\\2" t)))
+;;       (append auto-save-file-name-transforms
+;; 	      '((".*" "~/tmp/" t))))
 
 
 ;; 保存の間隔
@@ -162,6 +161,27 @@
 ;; 実行の有無
 (setq create-lockfiles nil)
 
+
+
+
+(defvar my-inhibit-auto-file-directory-list
+  (list
+   "~/DropBox"
+   (concat (getenv "USERPROFILE") "/Google ドライブ")
+   )
+  "自動作成(バックアップ、自動保存、ロック)を禁止するディレクトリーのリスト")
+  
+(add-hook 'find-file-hook
+	  '(lambda ()
+	     (when (listp my-inhibit-auto-file-directory-list)
+	       (let ((inhibit-ptn (concat "^\\(" (mapconcat '(lambda(str) (regexp-quote (expand-file-name str)))
+							    my-inhibit-auto-file-directory-list "\\|") "\\)")))
+		 (when (string-match inhibit-ptn buffer-file-name)
+		   (setq backup-inhibited t) ;; バックアップ禁止
+		   (auto-save-mode nil)	     ;; 自動保存しない
+		   (make-local-variable 'create-lockfiles) ;; ロックファイルを作成しない
+		   (setq create-lockfiles nil)
+		   )))))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
