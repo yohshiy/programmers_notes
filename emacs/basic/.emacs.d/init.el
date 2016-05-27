@@ -13,6 +13,7 @@
   (load custom-file))
 
 
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; 初期表示位置、サイズ
@@ -29,25 +30,32 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 
-;; Tips
-;; 
+;;
+;; スクロール
+;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; ベル音禁止
-(setq ring-bell-function 'ignore)
+;; スクロールした際のカーソルの移動行数
+(setq scroll-conservatively 1)
+
+;; スクロール開始のマージンの行数
+(setq scroll-margin 10)
 
 
-;; スタート画面(メッセージ)を表示しない
-(setq inhibit-startup-screen t)
+;; 1 画面スクロール時に重複させる行数
+(setq next-screen-context-lines 10)
+
+;; 1 画面スクロール時にカーソルの画面上の位置をなるべく変えない
+(setq scroll-preserve-screen-position t)
 
 
-;; 領域選択時、削除キーで一括削除
-(delete-selection-mode t)
-
-
-;; 行頭で kill-line (C-k) で行全体で削除
-(setq kill-whole-line t)
+;; マウスホイールによるスクロール時の行数
+;;   Shift 少なめ、 Ctrl 多めに移動
+(setq mouse-wheel-scroll-amount
+      '(5				; 通常   (デフォルト 5)
+	((shift) . 1)			; Shift  (デフォルト 1)
+	((control) . 40)		; Ctrl   (デフォルト nil = 無効)
+	))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -63,6 +71,7 @@
 
 ;; ファイルの文字コードだけ BOM 付き UTF-8
 (set-default 'buffer-file-coding-system 'utf-8-with-signature)
+
 
 
 
@@ -260,3 +269,34 @@
 ;; プログラミング
 ;; 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 
+;; Tips
+;; 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; ベル音禁止
+(setq ring-bell-function 'ignore)
+
+
+;; スタート画面(メッセージ)を表示しない
+(setq inhibit-startup-screen t)
+
+
+;; 領域選択時、削除キーで一括削除
+(delete-selection-mode t)
+
+;; 行頭で kill-line (C-k) で行全体で削除
+(setq kill-whole-line t)
+
+;; 読み取り専用バッファーでもカット系でコピー可能
+(setq kill-read-only-ok t)
+
+
+;; ediff 時にフレームを使わない
+(setq ediff-window-setup-function 'ediff-setup-windows-plain)
+
