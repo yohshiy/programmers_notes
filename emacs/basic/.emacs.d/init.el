@@ -9,8 +9,7 @@
 (setq custom-file "~/.emacs.d/custom_setttings.el")
 
 ;; カスタマイズ用ファイルをロード
-(when (file-exists-p custom-file)
-  (load custom-file))
+(load custom-file t)
 
 
 
@@ -69,8 +68,11 @@
 ;;  Linux => 環境変数 LANG から
 (set-language-environment "Japanese")
 
-;; ファイルの文字コードだけ BOM 付き UTF-8
-(set-default 'buffer-file-coding-system 'utf-8-with-signature)
+;; set-language-environment でうまくいかない場合に設定
+;; (setq prefer-coding-system 'utf-8)
+
+;; ファイルの文字コードだけ別に指定したい場合に設定
+;; (set-default 'buffer-file-coding-system 'utf-8-with-signature) ; BOM 付き UTF-8
 
 
 
@@ -231,11 +233,11 @@
 ;; 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(require 'package)
-(setq package-archives
-      (append package-archives '(("melpa" . "http://melpa.milkbox.net/packages/")
-				 ("marmalade" . "http://marmalade-repo.org/packages/"))))
-(package-initialize)
+(when (require 'package nil t)
+  (setq package-archives
+	(append package-archives '(("melpa" . "http://melpa.milkbox.net/packages/")
+				   ("marmalade" . "http://marmalade-repo.org/packages/"))))
+  (package-initialize))
 
 
 
@@ -271,6 +273,79 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
+;; C 系共通
+;; ================================================================
+
+;; 左端(文字の前)ではインデント、それ以外はタブの挿入
+(setq c-tab-always-indent nil)
+
+;; 空白を一度に削除
+(setq c-hungry-delete-key t)
+
+;; {, ; などのキーを入力すると自動で改行、インデント
+(setq c-auto-newline t)
+
+
+
+;; C, C++
+;; ================================================================
+
+;; .h でも C++
+(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+
+
+(autoload 'vs-set-c-style "vs-set-c-style"
+  "Set the current buffer's c-style to Visual Studio like style. ")
+
+
+(defun my-c-common-mode-init ()
+  ;; C, C++ 用の設定を記述
+
+  
+  ;; Visual Studio 風の設定
+  ;; (vs-set-c-style)
+
+  ;; M-<return> でコメント用の改行
+  (local-set-key (kbd "M-RET") 'c-indent-new-comment-line)
+  ) 
+
+(add-hook 'c-mode-hook 'my-c-common-mode-init)
+(add-hook 'c++-mode-hook 'my-c-common-mode-init)
+
+
+;; C#
+;; ================================================================
+
+(defun my-csharp-mode-init ()
+  ;; C# 用の設定を記述
+
+  
+  ;; auto-complete を有効
+  (if (fboundp 'auto-complete-mode)
+      (auto-complete-mode 1))
+
+  ;; "{" のインデントを正常に
+  (local-set-key "{" 'c-electric-brace)
+
+  ;; インデント調整
+  (setq c-basic-offset 4)
+  (setq tab-width 4)
+  (setq c-hanging-braces-alist
+	'((defun-open   	before after)
+	  (defun-close 	    	before after)
+	  (class-open  	    	before after)
+	  (class-close 	    	before)
+	  (namespace-open   	before after)
+	  (namespace-close	before after)
+	  (inline-open      	before after)
+	  (inline-close     	before after)
+	  (block-open   	before after)
+	  (block-close  	before after)
+	  (statement-case-open after)
+	  (substatement-open   before after))))
+(add-hook 'csharp-mode-hook 'my-csharp-mode-init)
+
+(add-to-list 'auto-mode-alist '("\\.xaml\\'" . xml-mode))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -279,7 +354,7 @@
 ;; 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; ベル音禁止
+;; ビープ音禁止
 (setq ring-bell-function 'ignore)
 
 
@@ -287,10 +362,15 @@
 (setq inhibit-startup-screen t)
 
 
-;; 領域選択時、削除キーで一括削除
+;; 選択領域を削除キーで一括削除
 (delete-selection-mode t)
 
-;; 行頭で kill-line (C-k) で行全体で削除
+;; shift + 矢印キーで領域選択
+(if (fboundp 'pc-selection-mode)
+    (pc-selection-mode))
+
+
+;; 行頭で kill-line (C-k) で行全体でカット
 (setq kill-whole-line t)
 
 ;; 読み取り専用バッファーでもカット系でコピー可能
