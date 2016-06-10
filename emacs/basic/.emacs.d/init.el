@@ -72,7 +72,7 @@
 ;; (setq prefer-coding-system 'utf-8)
 
 ;; ファイルの文字コードだけ別に指定したい場合に設定
-;; (set-default 'buffer-file-coding-system 'utf-8-with-signature) ; BOM 付き UTF-8
+;; (setq-default buffer-file-coding-system 'utf-8-with-signature) ; BOM 付き UTF-8
 
 
 
@@ -83,7 +83,8 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; Windows の場合、 IME の変換でエラーがでないようにする
+;; Windows の場合、
+;; IME の変換でエラーがでるので、何もしない関数を割り当てる
 (when (eq system-type 'windows-nt)
   (global-set-key [M-kanji] 'ignore)
   (global-set-key [kanji] 'ignore)
@@ -91,15 +92,11 @@
 
 
 ;; ターミナルの場合(window-system が nil)、
-;; <backspace> が C-h になるため、 C-h で一文字削除に設定
+;; <backspace> が C-h になるので、 C-h で <delete> (C-?) が押されたことにする
 (unless window-system
-  (global-set-key "\C-h" 'delete-backward-char)             ;; 全般
-  (define-key isearch-mode-map "\C-h" 'isearch-delete-char) ;; インクリメンタルサーチ用
-  (add-hook 'c-mode-common-hook
-	    '(lambda ()
-	       (local-set-key "\C-h" 'c-electric-delete)))  ;; C 言語系モード
-  )
-(global-set-key (kbd "M-?") 'help-command) ; ヘルプキーを変更
+  (keyboard-translate ?\C-h ?\C-?))
+;; C-h 以外もヘルプキーに割り当て
+(global-set-key (kbd "M-?") 'help-command)
 
 
 
@@ -283,7 +280,7 @@
 (setq c-hungry-delete-key t)
 
 ;; {, ; などのキーを入力すると自動で改行、インデント
-(setq c-auto-newline t)
+;; (setq c-auto-newline t)
 
 
 
@@ -296,7 +293,6 @@
 
 (autoload 'vs-set-c-style "vs-set-c-style"
   "Set the current buffer's c-style to Visual Studio like style. ")
-
 
 (defun my-c-common-mode-init ()
   ;; C, C++ 用の設定を記述
@@ -380,3 +376,6 @@
 ;; ediff 時にフレームを使わない
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 
+
+;; png, jpg などのファイルを画像として表示
+(setq auto-image-file-mode t)
