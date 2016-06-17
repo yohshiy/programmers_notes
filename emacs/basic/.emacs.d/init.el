@@ -269,18 +269,29 @@
 ;; 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; 共通
+
+;; 左端(文字の前)ではインデント、それ以外はタブの挿入
+(setq tab-always-indent nil)
+
+;; 空白を一度に削除
+(if (fboundp 'global-hungry-delete-mode)
+    (global-hungry-delete-mode 1))
+
+;; 改行時などに自動でインデント 
+;;   (C-j と C-m の入れ替え)
+(if (fboundp 'electric-indent-mode)
+    (electric-indent-mode 0))
+
+;; 特定の文字を入力すると自動で改行、インデント
+;; (electric-layout-mode 1)
+
 
 ;; C 系共通
 ;; ================================================================
 
 ;; 左端(文字の前)ではインデント、それ以外はタブの挿入
 (setq c-tab-always-indent nil)
-
-;; 空白を一度に削除
-(setq c-hungry-delete-key t)
-
-;; {, ; などのキーを入力すると自動で改行、インデント
-;; (setq c-auto-newline t)
 
 
 
@@ -298,11 +309,21 @@
   ;; C, C++ 用の設定を記述
 
   
+  ;; 空白などを一度に削除
+  (c-toggle-hungry-state 1)
+
+  ;; 改行時などで自動インデント
+  ;; (c-toggle-auto-newline 1)
+
+  ;; 改行時などで自動インデント
+  ;; (c-toggle-auto-newline 1)
+  
+  ;; ";", "}" などを入力したときに自動改行
+  ;; 自動インデントも一緒に ON になる
+  (c-toggle-auto-state 1)
+
   ;; Visual Studio 風の設定
   ;; (vs-set-c-style)
-
-  ;; M-<return> でコメント用の改行
-  (local-set-key (kbd "M-RET") 'c-indent-new-comment-line)
   ) 
 
 (add-hook 'c-mode-hook 'my-c-common-mode-init)
