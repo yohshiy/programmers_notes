@@ -273,6 +273,7 @@
 
 ;; 左端(文字の前)ではインデント、それ以外はタブの挿入
 (setq tab-always-indent nil)
+(setq c-tab-always-indent nil)
 
 ;; 空白を一度に削除
 (if (fboundp 'global-hungry-delete-mode)
@@ -290,9 +291,21 @@
 ;; C 系共通
 ;; ================================================================
 
-;; 左端(文字の前)ではインデント、それ以外はタブの挿入
-(setq c-tab-always-indent nil)
+(defun my-all-cc-mode-init ()
+  ;; C 系(cc-mode を継承した)モード共通の設定を記述
 
+  ;; 空白などを一度に削除
+  (c-toggle-hungry-state 1)
+
+  ;; 改行時などで自動インデント
+  ;; (c-toggle-electric-state 1)
+  ;; 
+  ;; ";", "}" などを入力したときに自動改行
+  ;; 自動インデントも一緒に ON になる
+  ;; (c-toggle-auto-newline 1)
+
+  )
+(add-hook 'c-mode-common-hook 'my-all-cc-mode-init)
 
 
 ;; C, C++
@@ -305,29 +318,15 @@
 (autoload 'vs-set-c-style "vs-set-c-style"
   "Set the current buffer's c-style to Visual Studio like style. ")
 
-(defun my-c-common-mode-init ()
+(defun my-c-c++-mode-init ()
   ;; C, C++ 用の設定を記述
-
   
-  ;; 空白などを一度に削除
-  (c-toggle-hungry-state 1)
-
-  ;; 改行時などで自動インデント
-  ;; (c-toggle-auto-newline 1)
-
-  ;; 改行時などで自動インデント
-  ;; (c-toggle-auto-newline 1)
-  
-  ;; ";", "}" などを入力したときに自動改行
-  ;; 自動インデントも一緒に ON になる
-  (c-toggle-auto-state 1)
 
   ;; Visual Studio 風の設定
   ;; (vs-set-c-style)
-  ) 
-
-(add-hook 'c-mode-hook 'my-c-common-mode-init)
-(add-hook 'c++-mode-hook 'my-c-common-mode-init)
+  )
+(add-hook 'c-mode-hook 'my-c-c++-mode-init)
+(add-hook 'c++-mode-hook 'my-c-c++-mode-init)
 
 
 ;; C#
