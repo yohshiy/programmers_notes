@@ -27,7 +27,7 @@ void safe_printf(const char *fmt, const Rest&... rest)
 
 int main()
 {
-  boost::format fmt(boost::format("Hello %s, %02d, %.3f\n"));
+  boost::format fmt("Hello %s, %02d, %.3f\n");
   safe_printf(fmt, "world", 3, 1.2);  // Hello world, 03, 1.200
   safe_printf("Hello %s, %02d, %.3f\n", "world", 3, 1.2);  // Hello world, 03, 1.200
   return 0;
