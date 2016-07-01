@@ -1,19 +1,5 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 
-;; カスタマイズ
-;; 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; カスタマイズ用のファイルを設定
-(setq custom-file "~/.emacs.d/custom_setttings.el")
-
-;; カスタマイズ用ファイルをロード
-(load custom-file t)
-
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; 初期表示位置、サイズ
 ;;
@@ -195,35 +181,6 @@
 
 
 
-
-(defvar my-inhibit-auto-file-directory-list
-  (list
-   "~/DropBox"
-   (concat (getenv "USERPROFILE") "/Google ドライブ")
-   )
-  "自動作成(バックアップ、自動保存、ロック)を禁止するディレクトリーのリスト")
-  
-(add-hook 'find-file-hook
-	  '(lambda ()
-	     (when (listp my-inhibit-auto-file-directory-list)
-	       (let ((inhibit-ptn (concat "^\\(" (mapconcat '(lambda(str) (regexp-quote (expand-file-name str)))
-							    my-inhibit-auto-file-directory-list "\\|") "\\)")))
-		 (when (string-match inhibit-ptn buffer-file-name)
-		   (setq backup-inhibited t) ;; バックアップ禁止
-		   (auto-save-mode nil)	     ;; 自動保存しない
-		   (make-local-variable 'create-lockfiles) ;; ロックファイルを作成しない
-		   (setq create-lockfiles nil)
-		   )))))
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 
-;; generic
-;; 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 
 ;; パッケージ
@@ -329,39 +286,6 @@
 (add-hook 'c++-mode-hook 'my-c-c++-mode-init)
 
 
-;; C#
-;; ================================================================
-
-(defun my-csharp-mode-init ()
-  ;; C# 用の設定を記述
-
-  
-  ;; auto-complete を有効
-  (if (fboundp 'auto-complete-mode)
-      (auto-complete-mode 1))
-
-  ;; "{" のインデントを正常に
-  (local-set-key "{" 'c-electric-brace)
-
-  ;; インデント調整
-  (setq c-basic-offset 4)
-  (setq tab-width 4)
-  (setq c-hanging-braces-alist
-	'((defun-open   	before after)
-	  (defun-close 	    	before after)
-	  (class-open  	    	before after)
-	  (class-close 	    	before)
-	  (namespace-open   	before after)
-	  (namespace-close	before after)
-	  (inline-open      	before after)
-	  (inline-close     	before after)
-	  (block-open   	before after)
-	  (block-close  	before after)
-	  (statement-case-open after)
-	  (substatement-open   before after))))
-(add-hook 'csharp-mode-hook 'my-csharp-mode-init)
-
-(add-to-list 'auto-mode-alist '("\\.xaml\\'" . xml-mode))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -399,3 +323,17 @@
 
 ;; png, jpg などのファイルを画像として表示
 (setq auto-image-file-mode t)
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 
+;; カスタマイズ
+;; 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; カスタマイズ用のファイルを設定
+(setq custom-file "~/.emacs.d/custom_setttings.el")
+
+;; カスタマイズ用ファイルをロード
+(load custom-file t)
