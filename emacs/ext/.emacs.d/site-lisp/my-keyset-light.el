@@ -10,9 +10,7 @@
 
 ;; 上下は C-p, C-n (そのまま)
 ;; 左右は C-k, C-l
-
 (global-set-key "\C-l" "\C-f")
-(global-unset-key [?\S-\C-l] )
 (global-set-key "\C-k" "\C-b")
 
 ;; (keyboard-translate ?\C-l ?\C-f)
@@ -53,12 +51,11 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defvar my-atkey-char "@")
+(defvar my-atkey-prefix (kbd "@"))
 
-(setq my-atkey-prefix (kbd my-atkey-char))
 (setq my-atkey-map (make-keymap))
-
 (define-key global-map my-atkey-prefix my-atkey-map)
+
 (defun my-set-key-atkey-map ()
   (local-set-key my-atkey-prefix my-atkey-map))
 (add-hook `hexl-mode-hook 'my-set-key-atkey-map)
@@ -143,4 +140,5 @@
 
 
 ;; 占有したキーの代替
-(define-key my-atkey-map my-atkey-prefix '(lambda () (interactive) (insert my-atkey-char)))
+(define-key my-atkey-map my-atkey-prefix '(lambda () (interactive) (insert "@")))
+
