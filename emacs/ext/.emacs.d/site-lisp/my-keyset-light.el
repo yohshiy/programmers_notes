@@ -60,7 +60,8 @@
   (local-set-key my-atkey-prefix my-atkey-map))
 (add-hook `hexl-mode-hook 'my-set-key-atkey-map)
 (add-hook `view-mode-hook 'my-set-key-atkey-map)
-
+(add-hook `ediff-keymap-setup-hook '(lambda ()
+				      (define-key ediff-mode-map my-atkey-prefix my-atkey-map)))
 
 ;;;;
 
@@ -99,6 +100,7 @@
 (define-key my-atkey-map "o" 'other-window)
 (define-key my-atkey-map "2" 'split-window-vertically)
 (define-key my-atkey-map "1" 'delete-other-windows)
+(define-key my-atkey-map "." 'delete-other-windows)
 (define-key my-atkey-map "0" 'delete-window)
 
 
