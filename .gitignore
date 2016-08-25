@@ -4,4 +4,5 @@ node/stdmod/_InternalDB-J01.bin
 *.~1~
 elpa
 .ehist
-.emacs.d/eshell
+emacs/basic/.emacs.d/eshell/history
+emacs/basic/.emacs.d/ac-comphist.dat
