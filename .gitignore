@@ -2,3 +2,6 @@
 node/stdmod/out.v30
 node/stdmod/_InternalDB-J01.bin
 *.~1~
+elpa
+.ehist
+.emacs.d/eshell

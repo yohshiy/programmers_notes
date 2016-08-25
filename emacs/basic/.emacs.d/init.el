@@ -245,10 +245,6 @@
 ;; C, C++
 ;; ================================================================
 
-;; .h でも C++
-(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
-
-
 (autoload 'vs-set-c-style "vs-set-c-style"
   "Set the current buffer's c-style to Visual Studio like style. ")
 
@@ -262,6 +258,9 @@
 (add-hook 'c-mode-hook 'my-c-c++-mode-init)
 (add-hook 'c++-mode-hook 'my-c-c++-mode-init)
 
+
+;; .h でも C++
+(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 
 
 
