@@ -6,3 +6,6 @@ elpa
 .ehist
 emacs/basic/.emacs.d/eshell/history
 emacs/basic/.emacs.d/ac-comphist.dat
+*.exe
+target
+*.lock
