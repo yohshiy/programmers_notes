@@ -5,50 +5,47 @@
 #include <vector>
 
 
-template <typename ElementType>
-int binary_search(const std::vector<ElementType> &ary, ElementType key)
+template <typename T>
+int binary_search(const std::vector<T> &ary, const T &val)
 {
-  const int KEY_NOT_FOUND = -1;
-  int imin = 0;
-  int imax = static_cast<int>(ary.size());
+  const int NOT_FOUND = -1;
+  int minidx = 0;
+  int maxidx = static_cast<int>(ary.size()) - 1;
 
-  for (;imin <= imax;) {
-    int imid = imin + (imax - imin) / 2;
-    if (ary[imid] > key) {
-      imax = imid - 1;
-    } else if (ary[imid] < key) {
-      imin = imid + 1;
-    } else {
-      return imid;
+  while (minidx <= maxidx) {
+    int mididx = minidx + (maxidx - minidx) / 2;
+    if (ary[mididx] == val) {
+      return mididx;
+    }
+    else if (ary[mididx] < val) {
+      minidx = mididx + 1;
+    }
+    else {
+      maxidx = mididx - 1;
     }
   }
-  return KEY_NOT_FOUND;
+  return NOT_FOUND;
 }
 
 
 template <class RandomIterator, typename T>
-RandamIterator binary_search(RandamIterator first, RandamIterator last, const T &val)
+RandomIterator binary_search(RandomIterator first, RandomIterator last, const T &val)
 {
-  if (last <= first) {
-    return last;
-  }
-  size_t bgnidx = 0;
-  size_t endidx = last - first;
+  RandomIterator not_found = last;  
 
-  for (;bgnidx <= endidx;) {
-    size_t mididx = bgnidx + (endidx - bgnidx) / 2;
-    const T &midval = *(first+mididx);
-    if (midval < val) {
-      bgnidx = mididx + 1;
+  while (first < last) {
+    RandomIterator mid = first + (last - first) / 2;
+    if (*mid == val) {
+      return mid;
     }
-    else if (midval == val) {
-      return first + mididx;
+    else if (*mid < val) {
+      first = mid + 1;
     }
     else {
-      endidx = mididx - 1;
+      last = mid;
     }
   }
-  return last;
+  return not_found;
 }
 
 

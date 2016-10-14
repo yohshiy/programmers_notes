@@ -27,7 +27,7 @@ int main(int argc, char **argv)
 {
   std::vector<int> vec;
 
-  if (argc < 3) {
+  if (argc < 2) {
     Usage();
     return 1;
   }
@@ -49,7 +49,7 @@ int main(int argc, char **argv)
   if (itr == vec.end()) {
     cout << "(Not found)";
   } else {
-    cout << *itr;
+    cout << (itr - vec.begin());
   }
   cout << endl;
   
