@@ -9,3 +9,5 @@ emacs/basic/.emacs.d/ac-comphist.dat
 *.exe
 target
 *.lock
+lang/cpp/Streams/defines.cpp
+lang/cpp/Streams/tmp.cpp
