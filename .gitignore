@@ -11,3 +11,4 @@ target
 *.lock
 lang/cpp/Streams/defines.cpp
 lang/cpp/Streams/tmp.cpp
+lang/rs/.cargo/config
