@@ -98,7 +98,7 @@ public:
   Student &operator=(const Student &other)
   {
     // 自身の代入チェック
-    if (this == &other) {
+    if (this != &other) {
       // 基底クラスメンバーの代入
       Person::operator=(other);
       SetSchool(other.m_school);
