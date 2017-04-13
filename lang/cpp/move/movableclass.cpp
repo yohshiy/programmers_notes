@@ -67,7 +67,7 @@ class Person
   {
     std::cout << "Move Constructor from " << other << std::endl;
     m_name = other.m_name;
-    other.m_name = nullptr;
+    other.m_name = nullptr;  // 元のは NULL を指すように変更
   }
 
   /// 移動代入演算子
