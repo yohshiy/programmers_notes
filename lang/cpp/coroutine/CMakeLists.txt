@@ -1,7 +1,14 @@
-
+﻿
 cmake_minimum_required(VERSION 3.0)
 project (coroutine_samples)
 
+include_directories(.)
+
+if(MSVC)
+  set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /SAFESEH:NO")
+else()
+  add_definitions(-std=c++14)
+endif()
 
 
 # Boost
@@ -34,7 +41,7 @@ message("-- == Boost library path : ${BOOST_LIBRARY_PATH}")
 message("-- == Boost coroutine library (Release) : ${BOOST_COROUTINE_LIB_RELEASE}")
 message("-- == Boost coroutine library (Debug)   : ${BOOST_COROUTINE_LIB_DEBUG}")
 
-include_directories(. ${BOOST_INCLUDE_PATH})
+include_directories(${BOOST_INCLUDE_PATH})
 link_directories(${BOOST_LIBRARY_PATH})
 
 link_libraries(
@@ -42,10 +49,9 @@ link_libraries(
   debug "${BOOST_COROUTINE_LIB_DEBUG}")
 
 
-if(MSVC)
-  set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /SAFESEH:NO")
-endif()
 
+# プロジェクト
+################################################################
 
 file(GLOB fibfiles fib.cpp)
 add_executable(fib ${fibfiles})
@@ -53,6 +59,12 @@ add_executable(fib ${fibfiles})
 file(GLOB readlinesfiles readlines.cpp)
 add_executable(readlines ${readlinesfiles})
 
+file(GLOB readerfiles reader.cpp)
+add_executable(reader ${readerfiles})
+
 
 file(GLOB enumerablefiles use_mixin.cpp EnumerableMixin.h)
 add_executable(enumerable ${enumerablefiles})
+
+add_subdirectory(streams)
+

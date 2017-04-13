@@ -49,15 +49,15 @@ int main()
 {
     boost::coroutines2::coroutine<int>::pull_type source(fibonacci);
 
-    for (auto num : source) {
-        std::cout << num <<  " ";
+    for (; source ; source()) {
+        std::cout << source.get() <<  " ";
     }
     std::cout << std::endl;
 
     
     source = boost::coroutines2::coroutine<int>::pull_type(fibonacci);
-    for (; source ; source()) {
-        std::cout << source.get() <<  " ";
+    for (auto num : source) {
+        std::cout << num <<  " ";
     }
     std::cout << std::endl;
 
