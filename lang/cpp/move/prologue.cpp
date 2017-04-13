@@ -80,5 +80,19 @@ int main()
   SwapEffective(foo, bar);
   cout << foo << " " << bar << endl;
 
+
+  //// 右辺値のサンプル
+  ////////////////////////////////////////////////////////////////
+
+  int num = 5;         // リテラル 5
+  int num2 = num * 2;  // 計算結果 10 (num*2)
+  
+  // 3 = num;
+  // num * 2 = 7;
+
+  cout << 3 << endl;
+  cout << num * 2 << endl;
+  cout << string("Hello") << endl;  // string("Hello") はすぐに解放
+  
   return 0;
 }
