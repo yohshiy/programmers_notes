@@ -50,7 +50,7 @@
 
 
 ;; ターミナルの場合(window-system が nil)、
-;; <backspace> が C-h になるので、 C-h で <delete> (C-?) が押されたことにする
+;; <backspace> が C-h になるので、C-h で <delete> (C-?) が押されたことにする
 (unless window-system
   (keyboard-translate ?\C-h ?\C-?))
 ;; C-h 以外もヘルプキーに割り当て
@@ -286,7 +286,7 @@
     (pc-selection-mode))
 
 
-;; 行頭で kill-line (C-k) で行全体でカット
+;; 行頭 kill-line (C-k) で行全体をカット
 (setq kill-whole-line t)
 
 ;; 読み取り専用バッファーでもカット系でコピー可能
@@ -328,7 +328,7 @@
 (set-language-environment "Japanese")
 
 ;; set-language-environment でうまくいかない場合に設定
-;; (setq prefer-coding-system 'utf-8)
+;; (prefer-coding-system 'utf-8)
 
 ;; ファイルの文字コードだけ別に指定したい場合に設定
 ;; (setq-default buffer-file-coding-system 'utf-8-with-signature) ; BOM 付き UTF-8
