@@ -53,6 +53,13 @@ void SwapEffective(string &a, string &b)
   a = std::move(tmp);
 }
 
+void SwapEffectiveMore(string &a, string &b)
+{
+  string tmp = std::move(b);
+  b = std::move(a);
+  a = std::move(tmp);
+}
+
 
 
 
@@ -60,6 +67,7 @@ void SwapEffective(string &a, string &b)
 int main()
 {
   string src = "Hello";
+  auto newstr = ToUpperString(src);
 
   cout << ToUpperString(src) << endl;
   cout << ToUpperStringEffective(src) << endl;
@@ -69,20 +77,26 @@ int main()
 
   cout << endl;
   cout << "# Swap" << endl;
-    
-  string foo = "Hello", bar = "World";
+  
+  string astr = "Hello", bstr = "World";
 
-  cout << foo << " " << bar << endl;
+  cout << astr << " " << bstr << endl;
 
-  Swap(foo, bar);
-  cout << foo << " " << bar << endl;
+  Swap(astr, bstr);
+  cout << astr << " " << bstr << endl;
     
-  SwapEffective(foo, bar);
-  cout << foo << " " << bar << endl;
+  SwapEffective(astr, bstr);
+  cout << astr << " " << bstr << endl;
+
+  SwapEffectiveMore(astr, bstr);
+  cout << astr << " " << bstr << endl;
 
 
   //// 右辺値のサンプル
   ////////////////////////////////////////////////////////////////
+
+  cout << endl;
+  cout << "# RValue" << endl;
 
   int num = 5;         // リテラル 5
   int num2 = num * 2;  // 計算結果 10 (num*2)
