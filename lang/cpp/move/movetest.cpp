@@ -132,6 +132,12 @@ int main(void)
 
   cout << endl;
 
+  cout << "move vector" << endl;
+  vector<Foo> foos2 = std::move(foos);
+  
+  cout << endl;
+  
+  
   string str = string("Hello") + " " + "world" + "!";
   cout << str << endl;
 
