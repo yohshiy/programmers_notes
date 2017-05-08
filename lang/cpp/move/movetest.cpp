@@ -154,7 +154,7 @@ int main(void)
   Foo obj(1);    
   bar.Set(obj);
   bar.Set(Foo(5));
-  bar.Set(9);
+  bar.Set(9);  // 暗黙的な型変換が起こり Foo(9) が作成される
 
   cout << endl;
 
