@@ -1,4 +1,11 @@
-﻿
+﻿/// @file
+/// コンセプト的な SFINAE のサンプル
+///
+/// コンパイル:
+///
+///     g++ -std=c++14 times.cpp
+/// 
+
 #include <iostream>
 #include <string>
 
@@ -16,14 +23,13 @@ template <class T>
 struct is_multipliable : decltype(check_multipliable<T>(nullptr)) {};
 
 
-
-template <typename T, typename std::enable_if_t<is_multipliable<T>::value, std::nullptr_t> = nullptr>
+template <typename T, std::enable_if_t<is_multipliable<T>::value, std::nullptr_t> = nullptr>
 T Times(const T &val, int num)
 {
     return val * num;
 }
 
-template <typename T, typename std::enable_if_t<!is_multipliable<T>::value, std::nullptr_t> = nullptr>
+template <typename T, std::enable_if_t<!is_multipliable<T>::value, std::nullptr_t> = nullptr>
 T Times(const T &val, int num)
 {
     T ret = T();
@@ -34,7 +40,7 @@ T Times(const T &val, int num)
 }
 
 
-template <typename T, typename std::enable_if_t<!is_multipliable<T>::value, std::nullptr_t> = nullptr>
+template <typename T, std::enable_if_t<!is_multipliable<T>::value, std::nullptr_t> = nullptr>
 T operator*(const T &val, int num)
 {
     std::cout << " T ";
