@@ -62,8 +62,7 @@ class Foo
     
 
   int GetVal() const { return m_val; }
-  
-  
+    
 };
 
 std::ostream &operator<<(std::ostream &os, const Foo &obj)
@@ -74,7 +73,7 @@ std::ostream &operator<<(std::ostream &os, const Foo &obj)
 
 
 
-//// 左辺値、右辺値で処理を変えるサンプル
+//// 引数が左辺値、右辺値かどうかで処理を変える関数
 ////////////////////////////////////////////////////////////////
 
 
@@ -113,6 +112,34 @@ void TransSetBar(Bar &bar, T && val)
 }
 
 
+
+//// Sender が左辺値、右辺値かどうかで処理を変えるメソッド
+////////////////////////////////////////////////////////////////
+
+class Baz
+{
+ public:
+  // 非 const な左辺値用
+  void Method() &
+  { 
+    std::cout << "Left-value sender" << std::endl;
+  }
+
+  // const な左辺値用
+  void Method() const &
+  { 
+    std::cout << "Left-value(const) sender" << std::endl;
+  }
+
+  // 右辺値用
+  void Method() &&
+  { 
+    std::cout << "Right-value sender" << std::endl;
+  }
+};
+
+
+
 ////////////////////////////////////////////////////////////////
 
 
@@ -146,7 +173,7 @@ int main(void)
 
     
     
-  //// 左辺値、右辺値で処理を変えるサンプル
+  //// 左辺値、右辺値で処理を変える関数
   ////////////////////////////////////////////////////////////////
 
   Bar bar;
@@ -158,15 +185,33 @@ int main(void)
 
   cout << endl;
 
+  //// グローバル参照
+  
   SetBar(bar, obj);
   SetBar(bar, Foo(5));
   SetBar(bar, 9);
 
   cout << endl;
 
+  //// 完全転送
+  
   TransSetBar(bar, obj);
   TransSetBar(bar, Foo(5));
   TransSetBar(bar, 9);
+
+  cout << endl << endl;
+
+
+
+  //// Sender が左辺値、右辺値かどうかで処理を変えるメンバー関数
+  ////////////////////////////////////////////////////////////////
+
+  Baz vobj;
+  const Baz cobj;
+
+  vobj.Method();
+  cobj.Method();
+  Baz().Method();
 
   cout << endl << endl;
 
