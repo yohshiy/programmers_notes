@@ -1,0 +1,6 @@
+﻿#ifndef __UTESTSCONFIG_H__
+#define __UTESTSCONFIG_H__
+// Data Directory
+const char * const DATA_DIR = "@DATA_DIR@";
+
+#endif
